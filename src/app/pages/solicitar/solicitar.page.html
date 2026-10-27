@@ -1,0 +1,64 @@
+<ion-content [fullscreen]="true" [scrollY]="false">
+  <app-mapa [origen]="origen()" [destino]="destino()" [ruta]="ruta()" [margenAbajo]="destino() ? 420 : 120"
+    (tocado)="tocarMapa($event)"></app-mapa>
+
+  <!-- Panel superior: origen y destino -->
+  <div class="panel">
+    <button class="atras" (click)="volver()" aria-label="Volver"><ion-icon name="arrow-back"></ion-icon></button>
+    <div class="ruta-ui">
+      <div class="marcas"><span class="o"></span><span class="l"></span><span class="d"></span></div>
+      <div class="campos">
+        <div class="campo fijo">{{ origen()?.nombre ?? 'Obteniendo ubicación…' }}</div>
+        <div class="campo">
+          <input [(ngModel)]="texto" (ngModelChange)="escribir($event)" placeholder="¿A dónde vas?" autocomplete="off" />
+          @if (texto) { <button class="x" (click)="limpiar()" aria-label="Borrar"><ion-icon name="close"></ion-icon></button> }
+        </div>
+      </div>
+    </div>
+
+    @if (buscando()) { <div class="cargando"><ion-spinner name="dots"></ion-spinner></div> }
+    @if (resultados().length) {
+      <div class="resultados">
+        @for (r of resultados(); track r.lat + ',' + r.lng) {
+          <button (click)="elegir(r)">
+            <span class="ic"><ion-icon name="location"></ion-icon></span>
+            <span class="txt"><b>{{ r.nombre.split(',')[0] }}</b><small>{{ r.nombre }}</small></span>
+          </button>
+        }
+      </div>
+    }
+    @if (!destino() && !resultados().length && !buscando()) {
+      <p class="tip">Escribe una dirección o toca el mapa para elegir el destino.</p>
+    }
+  </div>
+
+  <!-- Bottom sheet con tipos de servicio -->
+  @if (destino()) {
+    <div class="sheet">
+      @if (calculando()) {
+        <div class="cargando"><ion-spinner name="crescent"></ion-spinner> Calculando ruta…</div>
+      } @else {
+        <h2 class="titulo">Elige un viaje</h2>
+        <p class="muted meta">{{ km() | number: '1.1-1' }} km · {{ min() | number: '1.0-0' }} min aprox.</p>
+
+        @for (s of servicios; track s.tipo; let i = $index) {
+          <button class="opcion" [class.sel]="tipo() === s.tipo" (click)="tipo.set(s.tipo)">
+            <span class="emoji">{{ s.icono }}</span>
+            <span class="info">
+              <b>{{ s.nombre }} <small><ion-icon name="person"></ion-icon>{{ s.pasajeros }}</small></b>
+              <small>{{ llegada(3 + i * 2) }} · {{ s.descripcion }}</small>
+            </span>
+            <span class="precio">{{ precio(s.tipo) | currency: 'COP' : 'symbol-narrow' : '1.0-0' }}</span>
+          </button>
+        }
+
+        <div class="pago"><ion-icon name="cash"></ion-icon> Efectivo</div>
+
+        <ion-button class="btn-negro" expand="block" (click)="confirmar()" [disabled]="enviando()">
+          @if (enviando()) { <ion-spinner name="crescent"></ion-spinner> }
+          @else { Confirmar {{ servicioSel()?.nombre }} }
+        </ion-button>
+      }
+    </div>
+  }
+</ion-content>

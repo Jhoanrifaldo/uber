@@ -1,0 +1,49 @@
+app-mapa { position: absolute; inset: 0; }
+
+.panel {
+  position: absolute; z-index: 600; left: 0; right: 0; top: 0;
+  background: #fff; padding: calc(10px + var(--ion-safe-area-top, 0px)) 14px 12px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, .12); border-radius: 0 0 18px 18px;
+  max-height: 65%; overflow-y: auto;
+}
+.atras { background: none; border: 0; font-size: 24px; padding: 4px; color: #000; }
+.ruta-ui { display: flex; gap: 12px; margin-top: 4px; }
+.marcas { display: flex; flex-direction: column; align-items: center; padding: 18px 0; }
+.marcas .o { width: 8px; height: 8px; border-radius: 50%; background: #000; }
+.marcas .l { flex: 1; width: 2px; background: #000; margin: 4px 0; }
+.marcas .d { width: 8px; height: 8px; background: #000; }
+.campos { flex: 1; display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.campo {
+  background: #eee; border-radius: 8px; padding: 0 12px; height: 42px;
+  display: flex; align-items: center; font-size: 15px;
+}
+.campo.fijo { color: #555; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.campo input { flex: 1; border: 0; background: transparent; outline: none; font: inherit; color: #000; min-width: 0; }
+.x { background: none; border: 0; font-size: 18px; color: #555; }
+.tip { font-size: 13px; color: #6b6b6b; margin: 12px 4px 2px; }
+.cargando { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 14px; color: #555; }
+
+.resultados button {
+  width: 100%; display: flex; gap: 14px; align-items: center; background: none; border: 0;
+  border-bottom: 1px solid #f0f0f0; padding: 12px 4px; text-align: left; font: inherit; color: inherit;
+}
+.ic { width: 34px; height: 34px; border-radius: 50%; background: #eee; display: grid; place-items: center; flex: none; }
+.txt { display: flex; flex-direction: column; min-width: 0; }
+.txt small { color: #6b6b6b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.meta { margin: -8px 0 10px; font-size: 14px; }
+.opcion {
+  width: 100%; display: flex; align-items: center; gap: 12px; background: none;
+  border: 2px solid transparent; border-radius: 12px; padding: 10px; font: inherit; text-align: left; color: inherit;
+}
+.opcion.sel { border-color: #000; }
+.emoji { font-size: 34px; width: 52px; text-align: center; }
+.info { flex: 1; display: flex; flex-direction: column; }
+.info b { font-size: 16px; display: flex; align-items: center; gap: 8px; }
+.info b small { font-weight: 500; font-size: 13px; display: inline-flex; align-items: center; gap: 2px; }
+.info > small { color: #6b6b6b; font-size: 13px; }
+.precio { font-weight: 700; font-size: 16px; }
+.pago {
+  display: flex; align-items: center; gap: 8px; font-weight: 600; padding: 12px 4px;
+  border-top: 1px solid #eee; margin-top: 8px; color: #06c167;
+}

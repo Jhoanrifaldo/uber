@@ -1,0 +1,63 @@
+<ion-content [fullscreen]="true" [scrollY]="false">
+  <app-mapa [origen]="origen()" [destino]="destino()" [conductor]="auto()" [ruta]="ruta()" [margenAbajo]="340"></app-mapa>
+
+  @if (viaje(); as v) {
+    <div class="sheet">
+      <div class="barra"><span [style.width.%]="progreso()" [class.fin]="estado() === 'finalizado'"></span></div>
+
+      <div class="cabecera">
+        <div>
+          <h2 class="titulo">{{ texto() }}</h2>
+          @if (estado() === 'llegando' || estado() === 'en_curso') {
+            <p class="muted eta">{{ estado() === 'llegando' ? 'Llega en' : 'Llegas en' }} {{ minutos() }} min</p>
+          }
+        </div>
+        @if (estado() === 'buscando') { <ion-spinner name="crescent"></ion-spinner> }
+      </div>
+
+      @if (v.conductor && estado() !== 'cancelado') {
+        <div class="conductor">
+          <div class="avatar">{{ inicial(v.conductor.nombre) }}</div>
+          <div class="datos">
+            <b>{{ v.conductor.nombre }}</b>
+            <small><ion-icon name="star"></ion-icon> {{ v.conductor.calificacion }} · {{ v.conductor.vehiculo }}</small>
+          </div>
+          <div class="placa">{{ v.conductor.placa }}</div>
+        </div>
+        @if (estado() !== 'finalizado') {
+          <div class="acciones">
+            <a class="accion" [href]="'tel:' + (v.conductor.telefono ?? '')"><ion-icon name="call"></ion-icon>Llamar</a>
+            <button class="accion"><ion-icon name="chatbubble"></ion-icon>Mensaje</button>
+            <button class="accion"><ion-icon name="shield-checkmark"></ion-icon>Seguridad</button>
+          </div>
+        }
+      }
+
+      <div class="trayecto">
+        <div class="p"><span class="o"></span>{{ v.origen }}</div>
+        <div class="p"><span class="d"></span>{{ v.destino }}</div>
+      </div>
+
+      <div class="total">
+        <span>Total · Efectivo</span>
+        <b>{{ v.precio | currency: 'COP' : 'symbol-narrow' : '1.0-0' }}</b>
+      </div>
+
+      @if (estado() === 'finalizado') {
+        <p class="calif-t">¿Cómo estuvo tu viaje?</p>
+        <div class="estrellas">
+          @for (n of [1, 2, 3, 4, 5]; track n) {
+            <button (click)="calificar(n)" [attr.aria-label]="n + ' estrellas'">
+              <ion-icon [name]="n <= estrellas() ? 'star' : 'star-outline'"></ion-icon>
+            </button>
+          }
+        </div>
+        <ion-button class="btn-negro" expand="block" (click)="terminar()">Listo</ion-button>
+      } @else if (estado() === 'cancelado') {
+        <ion-button class="btn-negro" expand="block" (click)="terminar()">Volver al inicio</ion-button>
+      } @else if (puedeCancelar()) {
+        <ion-button expand="block" fill="clear" color="danger" (click)="cancelar()">Cancelar viaje</ion-button>
+      }
+    </div>
+  }
+</ion-content>

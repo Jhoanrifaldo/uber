@@ -1,0 +1,30 @@
+app-mapa { position: absolute; inset: 0; }
+.barra { height: 4px; background: #eee; border-radius: 2px; overflow: hidden; margin-bottom: 12px; }
+.barra span { display: block; height: 100%; background: #000; transition: width .6s; }
+.barra span.fin { background: #06c167; }
+.cabecera { display: flex; justify-content: space-between; align-items: center; }
+.cabecera .titulo { margin-bottom: 2px; }
+.eta { margin: 0 0 8px; }
+.conductor { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid #eee; }
+.avatar {
+  width: 48px; height: 48px; border-radius: 50%; background: #000; color: #fff;
+  display: grid; place-items: center; font-weight: 700; font-size: 20px;
+}
+.datos { flex: 1; display: flex; flex-direction: column; }
+.datos small { color: #6b6b6b; display: flex; align-items: center; gap: 3px; }
+.placa { background: #f3f3f3; padding: 6px 10px; border-radius: 6px; font-weight: 700; letter-spacing: 1px; }
+.acciones { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 12px 0; }
+.accion {
+  background: #f3f3f3; border: 0; border-radius: 10px; padding: 10px 0; font: inherit; font-size: 13px;
+  font-weight: 600; display: flex; flex-direction: column; align-items: center; gap: 4px; color: #000;
+  text-decoration: none;
+}
+.accion ion-icon { font-size: 20px; }
+.trayecto { padding: 10px 0; display: flex; flex-direction: column; gap: 10px; font-size: 14px; }
+.p { display: flex; align-items: center; gap: 12px; }
+.p .o, .p .d { width: 8px; height: 8px; background: #000; flex: none; }
+.p .o { border-radius: 50%; }
+.total { display: flex; justify-content: space-between; padding: 12px 0; border-top: 1px solid #eee; }
+.calif-t { text-align: center; font-weight: 600; margin: 8px 0 4px; }
+.estrellas { display: flex; justify-content: center; gap: 6px; margin-bottom: 12px; }
+.estrellas button { background: none; border: 0; font-size: 32px; color: #000; }
